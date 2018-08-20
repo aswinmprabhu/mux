@@ -513,6 +513,24 @@ func TestPathPrefix(t *testing.T) {
 			pathTemplate: `/{v1:[0-9]{3}}/{v2:[0-9]{3}}`,
 			shouldMatch:  false,
 		},
+		{
+			title:       "PathPrefix route with leading underscore, match",
+			route:       new(Route).PathPrefix("/_111"),
+			request:     newRequest("GET", "http://localhost/_111/aaa"),
+			vars:        map[string]string{},
+			host:        "",
+			path:        "/_111",
+			shouldMatch: true,
+		},
+		{
+			title:       "PathPrefix route with leading hyphen, match",
+			route:       new(Route).PathPrefix("/-111"),
+			request:     newRequest("GET", "http://localhost/-111/aaa"),
+			vars:        map[string]string{},
+			host:        "",
+			path:        "/-111",
+			shouldMatch: true,
+		},
 	}
 
 	for _, test := range tests {
